@@ -1,53 +1,44 @@
-const menuButton=document.querySelector('.menu-toggle');const nav=document.querySelector('.nav');menuButton.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));menuButton.textContent=open?'×':'☰'});document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuButton.setAttribute('aria-expanded','false');menuButton.textContent='☰'}));document.getElementById('year').textContent=new Date().getFullYear();document.getElementById('lead-form').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);const subject=encodeURIComponent('New project enquiry — Snapfold Co.');const body=encodeURIComponent(`Name: ${f.get('name')}\nEmail: ${f.get('email')}\nService: ${f.get('service')}\n\nProject details:\n${f.get('message')||'Not provided'}`);document.getElementById('form-note').textContent='Your email app should open with the enquiry prepared. Add your preferred business email in the mail window and send it.';window.location.href=`mailto:?subject=${subject}&body=${body}`;});
-
-/* Scroll reveals and lightweight page motion */
-const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const revealTargets=document.querySelectorAll('.section-heading,.service-card,.approach>div,.step,.work-card,.about-inner>div,.about-inner>p,.contact-copy,.contact-form,.trust-inner');
-if(!reduceMotion&&'IntersectionObserver' in window){
-  const revealObserver=new IntersectionObserver((entries,observer)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  },{threshold:.13,rootMargin:'0px 0px -35px 0px'});
-  revealTargets.forEach((element,index)=>{
-    element.classList.add('reveal');
-    if(element.classList.contains('service-card')) element.classList.add('reveal-delay-'+(index%4));
-    revealObserver.observe(element);
-  });
-}else{
-  revealTargets.forEach(element=>element.classList.add('is-visible'));
-}
-const header=document.querySelector('.site-header');
-let scrollTicking=false;
-const updateScrollMotion=()=>{
-  const maxScroll=document.documentElement.scrollHeight-window.innerHeight;
-  const progress=maxScroll>0?window.scrollY/maxScroll:0;
-  document.documentElement.style.setProperty('--scroll-progress',String(progress));
-  header.classList.toggle('is-scrolled',window.scrollY>12);
-  scrollTicking=false;
-};
-window.addEventListener('scroll',()=>{
-  if(!scrollTicking){window.requestAnimationFrame(updateScrollMotion);scrollTicking=true;}
-},{passive:true});
-updateScrollMotion();
-
-
-/* Pointer-reactive hero artwork and polished reveal staggering */
-const heroArtwork=document.querySelector('.hero-art');
-if(heroArtwork&&!reduceMotion&&window.matchMedia('(pointer:fine)').matches){
-  heroArtwork.addEventListener('pointermove',event=>{
-    const bounds=heroArtwork.getBoundingClientRect();
-    const x=(event.clientX-bounds.left)/bounds.width-.5;
-    const y=(event.clientY-bounds.top)/bounds.height-.5;
-    heroArtwork.style.transform=`perspective(1000px) rotateX(${-y*3}deg) rotateY(${x*4}deg)`;
-  });
-  heroArtwork.addEventListener('pointerleave',()=>{
-    heroArtwork.style.transform='perspective(1000px) rotateX(0) rotateY(0)';
-  });
-}
-document.querySelectorAll('.service-card').forEach((card,index)=>{
-  card.style.transitionDelay=`${(index%4)*70}ms`;
+const menuButton=document.querySelector('.menu-toggle');
+const nav=document.querySelector('.nav');
+menuButton.addEventListener('click',()=>{
+ const open=nav.classList.toggle('open');
+ menuButton.setAttribute('aria-expanded',String(open));
 });
+document.querySelectorAll('.nav a').forEach(link=>link.addEventListener('click',()=>{
+ nav.classList.remove('open');menuButton.setAttribute('aria-expanded','false');
+}));
+document.getElementById('year').textContent=new Date().getFullYear();
+const form=document.getElementById('lead-form');
+form.addEventListener('submit',event=>{
+ event.preventDefault();
+ const data=new FormData(form);
+ const subject=encodeURIComponent('New project enquiry — Snapfold Co.');
+ const body=encodeURIComponent('Name: '+data.get('name')+'\nEmail: '+data.get('email')+'\nService: '+data.get('service')+'\n\nProject details:\n'+(data.get('message')||'Not provided'));
+ document.getElementById('form-note').textContent='Your email app should open with the enquiry prepared. Add your preferred business email in the mail window and send it.';
+ window.location.href='mailto:?subject='+subject+'&body='+body;
+});
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const targets=document.querySelectorAll('.intro-grid,.services-head,.service-row,.manifesto-copy,.work-card,.studio-grid,.contact-grid');
+if(!reduceMotion&&'IntersectionObserver' in window){
+ const observer=new IntersectionObserver((entries,obs)=>{
+  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');obs.unobserve(entry.target);}});
+ },{threshold:.12,rootMargin:'0px 0px -30px 0px'});
+ targets.forEach((el,index)=>{el.classList.add('reveal');el.style.transitionDelay=(index%3)*70+'ms';observer.observe(el);});
+}
+const progress=document.querySelector('.progress');
+let ticking=false;
+function updateProgress(){
+ const max=document.documentElement.scrollHeight-window.innerHeight;
+ progress.style.transform='scaleX('+(max>0?window.scrollY/max:0)+')';
+ ticking=false;
+}
+window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(updateProgress);ticking=true;}},{passive:true});
+updateProgress();
+const art=document.querySelector('.hero-art');
+if(art&&!reduceMotion&&matchMedia('(pointer:fine)').matches){
+ art.addEventListener('pointermove',event=>{
+  const r=art.getBoundingClientRect(),x=(event.clientX-r.left)/r.width-.5,y=(event.clientY-r.top)/r.height-.5;
+  art.style.transform='perspective(900px) rotateX('+(-y*3)+'deg) rotateY('+(x*4)+'deg)';
+ });
+ art.addEventListener('pointerleave',()=>art.style.transform='perspective(900px) rotateX(0) rotateY(0)');
+}
