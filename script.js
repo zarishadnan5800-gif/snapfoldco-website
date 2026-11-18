@@ -33,3 +33,21 @@ window.addEventListener('scroll',()=>{
   if(!scrollTicking){window.requestAnimationFrame(updateScrollMotion);scrollTicking=true;}
 },{passive:true});
 updateScrollMotion();
+
+
+/* Pointer-reactive hero artwork and polished reveal staggering */
+const heroArtwork=document.querySelector('.hero-art');
+if(heroArtwork&&!reduceMotion&&window.matchMedia('(pointer:fine)').matches){
+  heroArtwork.addEventListener('pointermove',event=>{
+    const bounds=heroArtwork.getBoundingClientRect();
+    const x=(event.clientX-bounds.left)/bounds.width-.5;
+    const y=(event.clientY-bounds.top)/bounds.height-.5;
+    heroArtwork.style.transform=`perspective(1000px) rotateX(${-y*3}deg) rotateY(${x*4}deg)`;
+  });
+  heroArtwork.addEventListener('pointerleave',()=>{
+    heroArtwork.style.transform='perspective(1000px) rotateX(0) rotateY(0)';
+  });
+}
+document.querySelectorAll('.service-card').forEach((card,index)=>{
+  card.style.transitionDelay=`${(index%4)*70}ms`;
+});
