@@ -120,3 +120,61 @@ a{color:inherit;text-decoration:none}
 .footer-brand{color:var(--white)}.footer-brand .brand-mark{border-color:#9a855c;color:#c7b58e}.footer-brand .brand-light{color:#8d9288}
 @media(max-width:950px){.nav{gap:20px}.hero{gap:28px}.card-front{right:5px;width:330px}.service-grid{grid-template-columns:repeat(2,1fr)}.service-card:nth-child(3){border-left:1px solid var(--line)}.approach{gap:55px}.contact-panel{gap:45px;padding:45px}.trust-inner div{font-size:8px}.trust-inner i{margin:0 8px}}
 @media(max-width:650px){.section-wrap{width:min(100% - 36px,520px)}.site-header{height:72px;padding:0 18px}.menu-toggle{display:block}.nav{display:none;position:absolute;top:71px;left:0;right:0;background:var(--white);padding:16px 18px;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0}.nav.open{display:flex}.nav a{padding:14px}.nav .nav-cta{text-align:center;margin-top:8px}.hero{display:block;padding-top:65px;padding-bottom:38px;min-height:0}.hero h1{font-size:65px;letter-spacing:-1.7px}.hero-lead{font-size:13px}.hero-art{height:320px;margin-top:36px;transform:scale(.94);transform-origin:center}.card-front{width:285px;right:0;top:55px}.card-back{left:0;bottom:22px}.floating-chip{right:-4px;bottom:5px}.trust-inner{padding:22px 0;display:block;text-align:center}.trust-inner div{margin-top:13px;line-height:2.3;font-size:8px}.section{padding-top:78px;padding-bottom:78px}.section-heading{display:block;margin-bottom:34px}.section-heading h2,.approach h2{font-size:42px}.section-heading>p{margin-top:18px}.service-grid{grid-template-columns:1fr}.service-card,.service-card:first-child,.service-card:nth-child(3){border-left:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:0;padding:25px 22px}.service-card p{min-height:0}.service-icon{margin-bottom:24px}.approach{display:block}.steps{margin-top:45px}.work-grid{grid-template-columns:1fr}.work-visual{height:225px}.about-inner{display:block;padding-top:65px;padding-bottom:65px}.about-inner h2{font-size:42px}.about-inner>p{margin-top:25px;font-size:14px}.contact-section{padding-top:70px;padding-bottom:70px}.contact-panel{display:block;padding:34px 23px}.contact-copy h2{font-size:48px}.contact-form{margin-top:36px}.footer-inner{padding:25px 0;display:flex;flex-direction:column;align-items:flex-start;gap:13px}}
+
+
+/* MOTION SYSTEM — restrained, editorial, and accessible */
+:root{--motion-ease:cubic-bezier(.22,1,.36,1);--scroll-progress:0}
+html{scroll-behavior:smooth}
+body:before{content:"";position:fixed;inset:0 0 auto;height:2px;background:linear-gradient(90deg,#b49a68,#d7c8a7);transform:scaleX(var(--scroll-progress));transform-origin:left;z-index:100;pointer-events:none}
+.site-header{transition:background .35s ease,box-shadow .35s ease}
+.site-header.is-scrolled{background:rgba(255,254,250,.97);box-shadow:0 10px 35px rgba(23,27,24,.055)}
+.brand-mark{transition:transform .7s var(--motion-ease),background .3s,color .3s}
+.brand:hover .brand-mark{transform:rotate(180deg);background:var(--ink);color:var(--white)}
+.hero-copy>*{animation:rise-in .9s var(--motion-ease) both}
+.hero-copy .eyebrow{animation-delay:.08s}.hero-copy h1{animation-delay:.16s}.hero-copy .hero-lead{animation-delay:.25s}.hero-copy .hero-actions{animation-delay:.34s}.hero-copy .hero-proof{animation-delay:.43s}
+.hero-art{animation:art-arrive 1.2s var(--motion-ease) .15s both}
+.art-glow{animation:glow-breathe 7s ease-in-out infinite alternate}
+.orbit-one{animation:orbit-drift 18s ease-in-out infinite alternate}
+.orbit-two{animation:orbit-drift 22s ease-in-out infinite alternate-reverse}
+.card-front{animation:card-float 7s ease-in-out infinite}
+.card-back{animation:card-float-back 8s ease-in-out infinite}
+.floating-chip{animation:chip-float 5.5s ease-in-out infinite}
+.chart svg path:last-child{stroke-dasharray:520;stroke-dashoffset:520;animation:draw-line 2.1s var(--motion-ease) .8s forwards}
+.mini-bars b{transform-origin:bottom;animation:bar-rise .9s var(--motion-ease) both}
+.mini-bars b:nth-child(2){animation-delay:.12s}.mini-bars b:nth-child(3){animation-delay:.2s}.mini-bars b:nth-child(4){animation-delay:.28s}.mini-bars b:nth-child(5){animation-delay:.36s}.mini-bars b:nth-child(6){animation-delay:.44s}.mini-bars b:nth-child(7){animation-delay:.52s}
+.trust-inner div{animation:soft-drift 24s ease-in-out infinite alternate}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .85s var(--motion-ease),transform .85s var(--motion-ease)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}
+.service-card{position:relative;overflow:hidden;transition:background .45s ease,transform .55s var(--motion-ease),box-shadow .45s ease}
+.service-card:after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--gold);transition:right .55s var(--motion-ease)}
+.service-card:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(31,38,29,.07)}
+.service-card:hover:after{right:0}
+.service-icon{transition:transform .55s var(--motion-ease),background .35s,color .35s}
+.service-card:hover .service-icon{transform:rotate(-8deg) scale(1.08);background:var(--ink);color:#e1d1ac}
+.step{transition:padding .35s ease}.step:hover{padding-left:10px}
+.step>span{transition:color .3s}.step:hover>span{color:#f0dfb7}
+.work-card{transition:transform .6s var(--motion-ease),box-shadow .5s ease}
+.work-card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(31,38,29,.1)}
+.work-visual>div{transition:transform .8s var(--motion-ease)}
+.work-card:hover .browser,.work-card:hover .dashboard{transform:scale(1.035) translateY(-3px)}
+.work-arrow{transition:transform .35s,background .35s,color .35s}
+.work-card:hover .work-arrow{transform:rotate(45deg);background:var(--ink);color:white}
+.button{position:relative;overflow:hidden}
+.button:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.16) 48%,transparent 70%);transform:translateX(-130%);transition:transform .8s var(--motion-ease)}
+.button:hover:before{transform:translateX(130%)}
+.contact-panel{position:relative;overflow:hidden}
+.contact-panel:before{content:"";position:absolute;width:440px;height:440px;border:1px solid rgba(199,181,142,.12);border-radius:50%;right:-190px;top:-250px;box-shadow:0 0 0 45px rgba(199,181,142,.025),0 0 0 90px rgba(199,181,142,.02);pointer-events:none}
+.contact-copy,.contact-form{position:relative;z-index:1}
+@keyframes rise-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes art-arrive{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes glow-breathe{from{transform:scale(.88);opacity:.65}to{transform:scale(1.12);opacity:1}}
+@keyframes orbit-drift{from{rotate:-8deg;scale:.96}to{rotate:8deg;scale:1.04}}
+@keyframes card-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+@keyframes card-float-back{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(-4deg) translateY(9px)}}
+@keyframes chip-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes draw-line{to{stroke-dashoffset:0}}
+@keyframes bar-rise{from{transform:scaleY(.08);opacity:.3}to{transform:scaleY(1);opacity:1}}
+@keyframes soft-drift{from{transform:translateX(-5px)}to{transform:translateX(5px)}}
+@media(max-width:650px){.hero-art{animation:art-arrive 1s var(--motion-ease) .1s both}.card-front{animation-duration:8s}.trust-inner div{animation:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
